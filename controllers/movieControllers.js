@@ -2,7 +2,7 @@
 const connection = require('../data/db');
 
 // funzione index
-function index(res, req) {
+function index(req, res) {
 
     // preparazione query
     const sql = 'SELECT * FROM movies';
@@ -14,13 +14,15 @@ function index(res, req) {
     });
 }
 
-function show(res, req) {
+function show(req, res) {
 
     // recupero id da param dinamico
     const { id } = req.params;
 
     // prepariamo la query per la richiesta
     const movieSql = 'SELECT* FROM movies WHERE id = ?';
+
+    const reviewsSql = 'SELECT* FROM reviews WHERE book_id = ?';
 
     // chiamata a db principale per recuperare il film
     connection.query(movieSql, [id], (err, movieResults) => {
@@ -38,7 +40,7 @@ function show(res, req) {
             const reviewsArr = reviewsResults;
 
             // aggiungiamo a oggetto movie la prop per la reviews
-            movie.reviewsArr = reviewsArr
+            movie.reviews = reviewsArr
 
             // ritorno il json del movie
             res.json(movie);
