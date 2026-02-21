@@ -22,7 +22,7 @@ function show(req, res) {
     // prepariamo la query per la richiesta
     const movieSql = 'SELECT* FROM movies WHERE id = ?';
 
-    const reviewsSql = 'SELECT* FROM reviews WHERE book_id = ?';
+    const reviewsSql = 'SELECT* FROM reviews WHERE movie_id = ?';
 
     // chiamata a db principale per recuperare il film
     connection.query(movieSql, [id], (err, movieResults) => {
