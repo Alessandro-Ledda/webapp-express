@@ -26,7 +26,7 @@ const imagePathMiddleware = require('./middlewares/imagePath')
 app.use(imagePathMiddleware);
 
 // attivazione cartella public per i file statici(img)
-app.use(express.static('public'));
+app.use('/img/movies', express.static('public/movies_cover'));
 
 // rotta home app
 app.get('/api', (req, res) => {
