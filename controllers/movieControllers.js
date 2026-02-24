@@ -10,7 +10,16 @@ function index(req, res) {
     // esecuzione query
     connection.query(sql, (err, results) => {
         if (err) return res.status(500).json({ error: 'database query failed' });
-        res.json(results);
+        // creo una copia dei risultati con modifica path imgs
+        const movies = results.map(movie => {
+            return {
+                ...movie,
+                image: req.imagePath + movie.image
+            }
+        })
+        res.json(movies);
+
+
     });
 }
 
@@ -31,6 +40,9 @@ function show(req, res) {
 
         // salviamo il risultato in una costante
         const movie = movieResults[0];
+
+        // aggiungo path img dal middleware
+        movie.image = req.imagePath + movie.image;
 
         // chiamata a db secondaria per recupero reviews del libro
         connection.query(reviewsSql, [id], (err, reviewsResults) => {

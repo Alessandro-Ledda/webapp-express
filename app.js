@@ -5,6 +5,7 @@ const port = process.env.PORT;
 // import middleware corse
 const cors = require('cors');
 
+// middleware per il CORS
 app.use(cors({
     origin: 'http://localhost:5173'
 }));
@@ -17,6 +18,12 @@ const errorsHandler = require("./middlewares/errorsHandler");
 
 // import middlwere di gestione di rotta inesistente
 const notFound = require("./middlewares/notFound");
+
+// import del middelware di gestione di path imgs
+const imagePathMiddleware = require('./middlewares/imagePath')
+
+// attivazioone middelware di gestione di path imgs
+app.use(imagePathMiddleware);
 
 // attivazione cartella public per i file statici(img)
 app.use(express.static('public'));
