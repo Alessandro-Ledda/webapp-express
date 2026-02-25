@@ -1,5 +1,6 @@
 // importiamo la connesione al db
 const connection = require('../data/db');
+const { connect } = require('../routers/movieRouters');
 
 // funzione index
 function index(req, res) {
@@ -60,4 +61,24 @@ function show(req, res) {
     });
 }
 
-module.exports = { index, show }
+// funzione per lo store della review
+function storeReview(req, res) {
+
+    // recuperiamo id da param dinamico
+    const { id } = req.params;
+
+    // recuperiamo le info dal body della req
+    const { name, vote, text } = req.body;
+
+    // settiamo sql di richiest adal db
+    const sql = 'INSERT INTO reviews (text, name, vote, movie_id) VALUES (?, ?, ?, ?)';
+
+    // eseguiamo la query
+    connect.query(sql, [text, name, vote, movie_id], (err, results) => {
+        if (err) return res.status(500).json({ error: 'database query failed' });
+        res.status(201);
+        res.json({ message: 'Review added', id: results.insertId });
+    });
+}
+
+module.exports = { index, show, storeReview }
