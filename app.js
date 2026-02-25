@@ -28,6 +28,9 @@ app.use(imagePathMiddleware);
 // attivazione cartella public per i file statici(img)
 app.use('/img/movies', express.static('public/movies_cover'));
 
+//registro il body-parser per "application/json".......
+app.use(express.json());
+
 // rotta home app
 app.get('/api', (req, res) => {
     res.send("<h1>rotta di home della nostra app dei film</h1>")
